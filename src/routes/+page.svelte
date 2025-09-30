@@ -1,19 +1,40 @@
 <script lang="ts">
-	import { asset, assets, base } from '$app/paths';
-
-	// ./src/lib/assets folder
+	import { asset, base } from '$app/paths';
+	/*
+	./src/lib/assets folder
+	 */
 	// as direct import
 	import imgImport from '$lib/assets/asset-path.jpg';
-	let imgAssetFn = asset('/static-path.jpg');
-	console.log(`asset fn: ${imgAssetFn}`);
 
 	// using assets path
-	let assetPath = `${assets}/asset-path.jpg`;
-	console.log(`asset path: ${assetPath}`);
+	// This one is broken, dunno why
+	// let assetPath = `${assets}/asset-path.jpg`;
+	// console.log(`asset path: ${assetPath}`);
 
-	// ./static folder
+	/*
+	static folder
+	 */
+	let imgStaticAssetFn = asset('/static-path.jpg');
+	console.log(`asset fn: ${imgStaticAssetFn}`);
+
 	let basePath = `${base}/static-path.jpg`;
 	console.log(`static using base path: ${basePath}`);
+
+	/*
+	dynamic import
+	 */
+	let { data } = $props();
+
+	// using import.meta
+	let assetSlug = data.assetSlug;
+	let staticSlug = data.staticSlug;
+	const images = import.meta.glob(['$lib/assets/*'], { eager: true, as: 'url' });
+	let imgDynamicMeta = images[`/src/lib/assets/${assetSlug}.jpg`];
+	console.log(`dynamic import using import.meta: ${imgDynamicMeta}`);
+
+	// using asset fn
+	let imgDynamicAsset = asset(`/${staticSlug}.jpg`);
+	console.log(`dynamic import using asset fn: ${imgDynamicAsset}`);
 </script>
 
 <h1>Svelte image reference</h1>
@@ -32,10 +53,10 @@
 
 <h2>Using asset fn from src/lib/assets/</h2>
 <div class="row">
-	<img src={imgAssetFn} alt="asset fn" />
+	<img src={imgStaticAssetFn} alt="asset fn" />
 	<div
 		class="background"
-		style:background="url({imgAssetFn})"
+		style:background="url({imgStaticAssetFn})"
 		style:background-size="contain"
 		style:background-repeat="no-repeat"
 		style:background-position="center"
@@ -60,6 +81,30 @@
 	<div
 		class="background"
 		style:background="url({basePath})"
+		style:background-size="contain"
+		style:background-repeat="no-repeat"
+		style:background-position="center"
+	></div>
+</div>
+
+<h2>Dynamic import using import.meta</h2>
+<div class="row">
+	<img src={imgDynamicMeta} alt="base path" />
+	<div
+		class="background"
+		style:background="url({imgDynamicMeta})"
+		style:background-size="contain"
+		style:background-repeat="no-repeat"
+		style:background-position="center"
+	></div>
+</div>
+
+<h2>Dynamic import using asset fn</h2>
+<div class="row">
+	<img src={imgDynamicAsset} alt="img dynamic asset fn" />
+	<div
+		class="background"
+		style:background="url({imgDynamicAsset})"
 		style:background-size="contain"
 		style:background-repeat="no-repeat"
 		style:background-position="center"

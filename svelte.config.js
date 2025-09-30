@@ -18,7 +18,7 @@ const config = {
 		// Custom settings
 		paths: {
 			// base: dev ? '' : '/svelte-image-reference'
-			base: dev ? '' : process.env.BASE_PATH
+			base: dev ? '' : process.env.BASE_PATH,
 		}
 	}
 };
