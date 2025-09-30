@@ -1,6 +1,7 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
+const dev = process.argv.includes('dev');
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,9 +17,7 @@ const config = {
 		}),
 		// Custom settings
 		paths: {
-			// assets: 'http://localhost:5173/src/lib/assets/',
-			// base: "/${string}",
-
+			base: dev ? '' : '/svelte-image-reference'
 		}
 	}
 };
