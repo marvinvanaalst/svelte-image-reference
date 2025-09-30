@@ -1,6 +1,6 @@
-# Pico Svelte
+# Svelte image reference
 
-Trying out how to design a minimal set of components using a PicoCSS-style approach.
+Trying out different versions of how to use static images in a github pages deployed website.
 
 ```bash
 npm install
