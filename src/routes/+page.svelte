@@ -42,7 +42,7 @@
 	></div>
 </div>
 
-<h2>Using assets path from src/lib/assets/</h2>
+<!-- <h2>Using assets path from src/lib/assets/</h2>
 <div class="row">
 	<img src={assetPath} alt="assets path" />
 	<div
@@ -52,7 +52,7 @@
 		style:background-repeat="no-repeat"
 		style:background-position="center"
 	></div>
-</div>
+</div> -->
 
 <h2>Using base path from /static</h2>
 <div class="row">
