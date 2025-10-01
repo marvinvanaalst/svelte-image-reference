@@ -1,38 +1,37 @@
 <script lang="ts">
-	import { asset, base } from '$app/paths';
-	/*
-	./src/lib/assets folder
-	 */
-	// as direct import
+	import { asset, assets, base } from '$app/paths';
+
+	// Static import from ./src/lib/assets folder
+	//// as direct import
 	import imgImport from '$lib/assets/asset-path.jpg';
+	console.log(`asset import: ${imgImport}`);
 
-	// using assets path
-	// This one is broken, dunno why
-	// let assetPath = `${assets}/asset-path.jpg`;
-	// console.log(`asset path: ${assetPath}`);
+	//// using assets path (DEPRECATED)
+	//// This one is broken, probably config issue by me in svelte.config.js
+	let assetPath = `${assets}/asset-path.jpg`;
+	console.log(`asset path: ${assetPath}`);
 
-	/*
-	static folder
-	 */
+	// Static import from ./static folder
+	//// using the asset function
 	let imgStaticAssetFn = asset('/static-path.jpg');
 	console.log(`asset fn: ${imgStaticAssetFn}`);
 
+	//// Using base path directly (DEPRECATED)
 	let basePath = `${base}/static-path.jpg`;
 	console.log(`static using base path: ${basePath}`);
 
-	/*
-	dynamic import
-	 */
 	let { data } = $props();
 
-	// using import.meta
+	// dynamic import from ./src/lib/assets folder
+	//// using import.meta
 	let assetSlug = data.assetSlug;
 	let staticSlug = data.staticSlug;
 	const images = import.meta.glob(['$lib/assets/*'], { eager: true, as: 'url' });
 	let imgDynamicMeta = images[`/src/lib/assets/${assetSlug}.jpg`];
 	console.log(`dynamic import using import.meta: ${imgDynamicMeta}`);
 
-	// using asset fn
+	// dynamic import from ./static folder
+	//// using asset fn
 	let imgDynamicAsset = asset(`/${staticSlug}.jpg`);
 	console.log(`dynamic import using asset fn: ${imgDynamicAsset}`);
 </script>
@@ -63,6 +62,7 @@
 	></div>
 </div>
 
+<!-- Disabled for now as it breaks build -->
 <!-- <h2>Using assets path from src/lib/assets/</h2>
 <div class="row">
 	<img src={assetPath} alt="assets path" />
